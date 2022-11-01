@@ -1,10 +1,10 @@
 # struct_traits
 
-A head-only C++ library to do reflection of aggregate type.
+A head-only C++ library can be used to do reflection of aggregate type.
 
 The basic idea is from artical of João Baptista: https://towardsdev.com/counting-the-number-of-fields-in-an-aggregate-in-c-20-c81aecfd725c
 
-Here is a simple example (test.cpp):
+Here is an example (test.cpp):
 ```cpp
 #include <cstddef> // offset_of
 #include <cassert> // assert
