@@ -70,14 +70,6 @@ struct MyVisitor
     }
 };
 
-template<typename T, size_t N>
-constexpr size_t arr_size(T [N])
-{
-    return N;
-}
-template<typename T>
-constexpr size_t arr_size(T a) { return 1; }
-
 int main()
 {
     using namespace zhb;
