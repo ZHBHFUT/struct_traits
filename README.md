@@ -48,10 +48,48 @@ struct A
     float  a6[2][3]{ 0 };
 };
 
+// a visitor class
+struct MyVisitor
+{
+    template<typename T>
+    void operator()(T& val)
+    {
+        std::cout << val << '\n';
+    }
+    template<typename T, std::size_t N>
+    void operator()(T(&val)[N])
+    {
+        std::cout << '{';
+        for (std::size_t i = 0; i < N; ++i)
+            std::cout << val[i] << ',';
+        std::cout << "}\n";
+    }
+    template<typename T, std::size_t M, std::size_t N>
+    void operator()(T(&val)[M][N])
+    {
+        std::cout << '{';
+        for (std::size_t i = 0; i < M; ++i) {
+            std::cout << '{';
+            for (std::size_t j = 0; j < N; ++j)
+                std::cout << val[i][j] << ',';
+            std::cout << "},";
+        }
+        std::cout << "}\n";
+    }
+};
+
+template<typename T, size_t N>
+constexpr size_t arr_size(T [N])
+{
+    return N;
+}
+template<typename T>
+constexpr size_t arr_size(T a) { return 1; }
+
 int main()
 {
     using namespace zhb;
-    
+
     //--- compiling time test
     
     // test number of fields
@@ -98,10 +136,10 @@ int main()
     constexpr auto a6_rank = rank_of_array_field_v<A, 6>; // 1
 
     // get length of array field
-    constexpr auto a0_size = length_of_array_field_v<A, 0>; // 3
-    constexpr auto a3_size = length_of_array_field_v<A, 3>; // 2
-    constexpr auto a6_size0 = length_of_array_field_v<A, 6, 0>; // 2
-    constexpr auto a6_size1 = length_of_array_field_v<A, 6, 1>; // 3
+    constexpr auto a0_size  = extent_of_array_field_v<A, 0>; // 3
+    constexpr auto a3_size  = extent_of_array_field_v<A, 3>; // 2
+    constexpr auto a6_size0 = extent_of_array_field_v<A, 6, 0>; // 2
+    constexpr auto a6_size1 = extent_of_array_field_v<A, 6, 1>; // 3
 
     static_assert(a0_size == 3);
     static_assert(a3_size == 2);
