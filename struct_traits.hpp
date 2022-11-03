@@ -1,14 +1,14 @@
-// @author ZHANG Bing, zhangbing@hfut.edu.cn
-// @date   2022-10-29
-// @version 0.21
-// 
-// original idea is from:
-//   https://towardsdev.com/counting-the-number-of-fields-in-an-aggregate-in-c-20-c81aecfd725c
-// 
-// improvements:
-//   1) fix bugs if field is array of user defined type.
-//   2) easy and fast!
-//
+//! @author ZHANG Bing, zhangbing@hfut.edu.cn
+//! @date   2022-10-29
+//! @version 0.22
+//! 
+//! original idea is from:
+//!   https://towardsdev.com/counting-the-number-of-fields-in-an-aggregate-in-c-20-c81aecfd725c
+//! 
+//! improvements:
+//!   1) fix bugs if field is array of user defined type.
+//!   2) easy and fast!
+//!
 
 #pragma once
 #include <type_traits>
@@ -16,8 +16,9 @@
 
 namespace zhb {
 
+    //! @brief a struct type
     template <typename T>
-    concept aggregate = std::is_aggregate_v<T>;
+    concept aggregate = std::is_aggregate_v<T> && !std::is_array_v<T>;
 
     namespace detail
     {
